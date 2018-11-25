@@ -10,7 +10,7 @@ Page({
     cStatus: 0,
     page: 1,
     limit: 12,
-    addLength:1
+    addLength: 1
   },
   swith: function (e) {
 
@@ -159,7 +159,7 @@ Page({
   },
 
   /**
-   * 页面相关事件处理函数--监听用户下拉动作
+   * 页面相关事件处理函数--监听用户下拉动作/刷新页面
    */
   onPullDownRefresh: function () {
     //数据加载loading
@@ -187,9 +187,7 @@ Page({
         //热映数据获取完后,改变状态
         _this.setData({ hotStatus: 1 });
         //数据成功渲染停止loading效果
-        wx.hideLoading({
-          title: '刷新成功'
-        });
+        wx.hideLoading();
         wx.stopPullDownRefresh();
       }
     });
@@ -199,10 +197,10 @@ Page({
   },
 
   /**
-   * 页面上拉触底事件的处理函数
+   * 页面上拉触底事件/加载更多的处理函数
    */
   onReachBottom: function () {
-   
+    if (this.data.addLength == 0) return;
     //loading
     wx.showLoading({
       title: '正在加载'
@@ -223,7 +221,7 @@ Page({
       },
       success: function (info) {
         console.log(info.data.data.hot);
-        
+
         info.data.data.hot.forEach(element => {
           //处理数据,获取特定尺寸的图片w.h,重新赋值
           element.img = element.img.replace('w.h', '128.180');
@@ -231,13 +229,13 @@ Page({
         info.data.data.hot.forEach(function (e) {
           //将新数据中的项目 添加到数据中
           _this.data.hot.push(e);
-        })        
-        
+        })
+
         //重新设置数据来进行数据驱动视图
         //设置长度 判断是否显示加载框
         _this.setData({
           hot: _this.data.hot,
-          addLength:info.data.data.hot.length
+          addLength: info.data.data.hot.length
         })
         // console.log(_this.data.hot);
         //将页数+1
@@ -246,8 +244,8 @@ Page({
         wx.hideLoading({
           title: '刷新成功'
         });
-        
-        wx.stopPullDownRefresh();       
+
+        wx.stopPullDownRefresh();
       }
     });
 
