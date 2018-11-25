@@ -1,0 +1,93 @@
+<view class="header" hover-class="none" hover-stop-propagation="false">
+	<view class="aret">{{locate}}</view>
+	<view class="play">
+		<!-- 利用自定义属性 进行判断当前点击项目  更改显示类名 -->
+		<!-- s设置不同的自定义属性 根据属性值判断是第几次点击热映或者是待映,来决定是否请求数据 -->
+		<view
+		 bind:tap='swith'
+		 class="{{ac=='reying'?'active':''}}"
+		 data-status="{{hotStatus}}"
+		 data-class-index="reying"
+		>
+			热映
+		</view>
+		<view
+		 bind:tap='swith'
+		 class="{{ac=='jijiang'?'active':''}}"
+		 data-status="{{cStatus}}"
+		 data-class-index="jijiang"
+		>
+			待映
+		</view>
+	</view>
+	<view
+	 bind:tap="stop"
+	 class="search"
+	 selectable="false"
+	 space="false"
+	 decode="false"
+	>
+		<view
+		 class="i_icon"
+		 selectable="false"
+		 space="false"
+		 decode="false"
+		>
+			<icon type="search" size="16" color="#e54847" />
+		</view>
+	</view>
+</view>
+<!-- 正在上映 -->
+<view class="items" hidden="{{ac=='jijiang'}}">
+	<view
+	 class="item"
+	 wx:for="{{hot}}"
+	 hover-class="none"
+	 hover-stop-propagation="false"
+	 wx:key="{{item.id}}"
+	>
+		<image class="" src="{{item.img}}" />
+		<view class="xq" hover-class="none" hover-stop-propagation="false">
+			<view class="introduce" hover-class="none" hover-stop-propagation="false">
+				<text class="title">{{item.nm}}</text>
+				<text class="pingfen">观众评分:{{item.mk}}</text>
+				<text class="zhuyan">{{item.desc}}</text>
+				<text class="changci">{{item.showInfo}}</text>
+			</view>
+			<view class="btn" hover-class="none" hover-stop-propagation="false">购票</view>
+		</view>
+	</view>
+</view>
+<!-- 在数据获取成功的时候 显示页面元素 -->
+<view class="wrap" hidden="{{ac=='reying'}}" wx:if="{{cStatus==1}}">
+	<text class='titl'>近期最受期待</text>
+	<scroll-view scroll-x="{{true}}">
+		<view class='cell' wx:for="{{comingList}}" wx:key="{{item.id}}">
+			<image src='{{item.img}}' />
+			<text class='name'>{{item.nm}}</text>
+			<text class='time'>{{item.rt}}</text>
+			<text class='look'>{{item.wish}}人看过</text>
+		</view>
+	</scroll-view>
+	<!-- 即将上映 -->
+	<view class=" items">
+		<block wx:for="{{comingListT}}" wx:key="{{item.id}}">
+			<text class='titl' wx:if="{{item.comingTitle}}">{{item.comingTitle}}</text>
+			<view class="item" hover-class="none" hover-stop-propagation="false">
+				<image class="" src="{{item.img}}" />
+				<view class="xq" hover-class="none" hover-stop-propagation="false">
+					<view class="introduce" hover-class="none" hover-stop-propagation="false">
+						<text class="title">{{item.nm}}</text>
+						<text class="pingfen">{{item.wish}}人看过</text>
+						<text class="zhuyan">{{item.desc}}</text>
+						<text class="changci">{{item.pubDesc}}</text>
+					</view>
+					<view class="btn" hover-class="none" hover-stop-propagation="false">购票</view>
+				</view>
+			</view>
+		</block>
+	</view>
+</view>
+<view class="addItem" wx:if="{{addLength!=0}}">正在加载......</view>
+<view class="addItem" wx:if="{{addLength==0}}">没有更多数据了!</view>
+
