@@ -9,14 +9,7 @@ Page({
     takeSession: false,
     requestResult: ''
   },
-  baidu:function(){
-    console.log(1);
-    //页面跳转,此方法不能跳转tabbar
-    wx.navigateTo({
-      url: '/pages/test/test'
-      // url: 'www.baidu.com'
-    })
-  },
+
   onLoad: function() {
     if (!wx.cloud) {
       wx.redirectTo({

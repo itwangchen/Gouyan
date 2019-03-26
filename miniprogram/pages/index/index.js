@@ -12,24 +12,27 @@ Page({
     limit: 12,
     addLength: 1
   },
-  swith: function (e) {
 
+  swith: function (e) {
     var _this = this;
+    console.log(this);
+    
+    var classInd=e.target.dataset.classIndex;//获取当前点击项目
     //将当前的点击项目的自定义属性的值赋值给ac
     this.setData({
-      ac: e.target.dataset.classIndex
+      ac: classInd
     });
     //用户点击待映的时候发送请求
     //根据自定义属性,判断点击的为将映
     //判断当前点击的元素
     if (e.target.dataset.classIndex == "jijiang") {
-      //1 表示数据请求过,0 表示未请求
-      if (e.target.dataset.status == 1) {
-        return
-      } else {
-        //数据加载loading
-        wx.showLoading({
-          title: '加载中'
+        //绑定 在自定义属性中,1 表示数据请求过,0 表示未请求
+        if (e.target.dataset.status == 1) {
+          return
+        } else {
+          //数据加载loading
+          wx.showLoading({
+            title: '加载中'
         });
         wx.request({
           //最受欢迎
@@ -97,10 +100,10 @@ Page({
     // console.log('页面加载完毕...');
 
     var _this = this;
-    // 要获得全局数据
-
+    // 要获得全局对象
     var app = getApp();
     // console.log(this)
+    // 调用位置获取方法
     app.getLocation(function (locate) {
       //   // 用户所在城市
       _this.setData({ locate: locate });
@@ -114,6 +117,8 @@ Page({
           ct: locate
         },
         success: function (info) {
+          console.log(info);
+          
           info.data.data.hot.forEach(element => {
             //处理数据,获取特定尺寸的图片w.h,重新赋值
             element.img = element.img.replace('w.h', '128.180');
@@ -127,7 +132,6 @@ Page({
         }
       });
     });
-
   },
 
   /**
@@ -191,10 +195,7 @@ Page({
         wx.stopPullDownRefresh();
       }
     });
-
-
-
-  },
+   },
 
   /**
    * 页面上拉触底事件/加载更多的处理函数
@@ -253,25 +254,26 @@ Page({
   },
 
   /**
-   * 用户点击右上角分享
+   * 用户点击右上角分享,点击转发
    */
   onShareAppMessage: function () {
-
+      console.log('点击分享');
+      
   }
   ,
   stop: function () {
-    wx.showToast({
+    wx.showToast({//loading
       title: '搜索电影!',
       icon: 'success',
       duration: 2000
     });
     wx.showActionSheet({
-      itemList: ['拍照', '自拍', '本地上传'],
+      itemList: ['拍照', '自拍', '本地上传','分享'],
       success(res) {
-        console.log(res.tapIndex)
+        console.log(['拍照', '自拍', '本地上传','分享'][res.tapIndex])
       },
       fail(res) {
-        console.log(res.errMsg)
+        console.log('关闭')
       }
     });
   }

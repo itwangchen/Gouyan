@@ -25,6 +25,8 @@ App({
     // 小程序提供了专门的 API 来获取用户位置
     wx.getLocation({
       success: function (res) {
+        console.log(res);
+        
         var latitude = res.latitude.toFixed(5),
         longitude = res.longitude.toFixed(5);
 

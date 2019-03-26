@@ -1,5 +1,5 @@
 <view class="header" hover-class="none" hover-stop-propagation="false">
-	<view class="aret">{{locate}}</view>
+	<view class="aret" bind:tap="baidu">{{locate}}</view>
 	<view class="play">
 		<!-- 利用自定义属性 进行判断当前点击项目  更改显示类名 -->
 		<!-- s设置不同的自定义属性 根据属性值判断是第几次点击热映或者是待映,来决定是否请求数据 -->
@@ -25,14 +25,13 @@
 	 class="search"
 	 selectable="false"
 	 space="false"
-	 decode="false"
-	>
-		<view
-		 class="i_icon"
-		 selectable="false"
-		 space="false"
-		 decode="false"
-		>
+	 decode="false"	>
+      <view
+      class="i_icon"
+      selectable="false"
+      space="false"
+      decode="false"
+      >
 			<icon type="search" size="16" color="#e54847" />
 		</view>
 	</view>
@@ -44,8 +43,7 @@
 	 wx:for="{{hot}}"
 	 hover-class="none"
 	 hover-stop-propagation="false"
-	 wx:key="{{item.id}}"
-	>
+	 wx:key="{{item.id}}"	>
 		<image class="" src="{{item.img}}" />
 		<view class="xq" hover-class="none" hover-stop-propagation="false">
 			<view class="introduce" hover-class="none" hover-stop-propagation="false">
@@ -58,6 +56,7 @@
 		</view>
 	</view>
 </view>
+<!-- 即将上映-->
 <!-- 在数据获取成功的时候 显示页面元素 -->
 <view class="wrap" hidden="{{ac=='reying'}}" wx:if="{{cStatus==1}}">
 	<text class='titl'>近期最受期待</text>

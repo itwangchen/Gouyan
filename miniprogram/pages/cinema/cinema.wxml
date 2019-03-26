@@ -1,1 +1,1 @@
-电影院
+<view class="aret" bind:tap="baidu">进入百度</view>
