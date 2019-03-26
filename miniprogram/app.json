@@ -3,7 +3,8 @@
     "pages/index/index",   
     "pages/cinema/cinema" ,  
     "pages/user/user",  
-    "pages/test/test"  
+    "pages/test/test",  
+    "pages/Map/mapline"  
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
